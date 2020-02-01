@@ -9,10 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Navbar from './components/ui/Navbar';
 import ProductList from './containers/ProductList';
-// import ProductListRoute from './routes/ProductListRoute';
 import ProductDetails from './components/ui/ProductDetails';
-// import ProductDetailsRoute from './routes/ProductDetailsRoute';
-// import CartRoute from './routes/CartRoute';
 import Cart from './containers/Cart';
 import ProductsProvider from './providers/ProductsProvider';
 import './App.css';

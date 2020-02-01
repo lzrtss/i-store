@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import CartItem from './CartItem';
+import CartItem from './CartItem/CartItem';
 
 const CartList = ({ orderedProductsIds }) => {
   return (
@@ -10,6 +11,10 @@ const CartList = ({ orderedProductsIds }) => {
       ))}
     </div>
   );
+};
+
+CartList.propTypes = {
+  orderedProductsIds: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default CartList;

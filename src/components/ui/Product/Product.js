@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { ProductsContext } from '../../providers/ProductsProvider';
-import productImage from '../../assets/images/product-image.png';
+import { ProductsContext } from '../../../providers/ProductsProvider';
+import styles from './Product.module.css';
+import productImage from '../../../assets/images/product-image.png';
 
 const Product = ({
   id,
@@ -14,7 +16,7 @@ const Product = ({
   const { addToCart } = useContext(ProductsContext);
 
   return (
-      <Card style={{ width: '18rem', margin: '1rem' }} className="productCard">
+      <Card style={{ width: '18rem', margin: '1rem' }} className={styles.productCard}>
         <Card.Img variant="top" src={productImage} />
         <Card.Body>
         <Card.Title>{name}</Card.Title>
@@ -39,6 +41,13 @@ const Product = ({
       </Card.Body>
       </Card>
   );
+};
+
+Product.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  origin: PropTypes.string
 };
 
 export default Product;

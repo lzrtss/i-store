@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Container, Row } from 'react-bootstrap';
 
 import { ProductsContext } from '../providers/ProductsProvider';
-import Product from '../components/ui/Product';
+import Product from '../components/ui/Product/Product';
 import AppSpinner from '../components/ui/AppSpinner';
 
 const ProductList = () => {  
