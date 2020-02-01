@@ -1,0 +1,13 @@
+body {
+  text-align: center;
+}
+
+.productCard:hover {
+  transition: all 0.25s linear;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.removeItem:hover {
+  cursor: pointer;
+}
