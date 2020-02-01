@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 const CartTotal = ({ totalAmount }) => {
   return (
@@ -13,6 +14,10 @@ const CartTotal = ({ totalAmount }) => {
       </Container>
     </>
   );
+};
+
+CartTotal.propTypes = {
+  totalAmount: PropTypes.number
 };
 
 export default CartTotal;

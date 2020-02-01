@@ -7,10 +7,9 @@ import CartColumns from '../components/ui/Cart/CartColumns';
 import CartList from '../components/ui/Cart/CartList';
 import CartTotal from '../components/ui/Cart/CartTotal';
 
-const CartRoute = () => {
+const Cart = () => {
   const { loadingProducts, orderedProducts, getTotalAmount } = useContext(ProductsContext);
-  const curOrderedProducts = {...orderedProducts};
-  const orderedProductsIds = Object.keys(curOrderedProducts).filter(key => curOrderedProducts[key] > 0);
+  const orderedProductsIds = Object.keys(orderedProducts).filter(key => orderedProducts[key] > 0);
 
   const totalAmount = getTotalAmount();
 
@@ -26,4 +25,4 @@ const CartRoute = () => {
   );
 }
 
-export default CartRoute;
+export default Cart;

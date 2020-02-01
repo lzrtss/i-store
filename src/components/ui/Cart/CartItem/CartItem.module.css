@@ -1,0 +1,7 @@
+.CartItem {
+  margin-bottom: 1rem;
+}
+
+.removeItem:hover {
+  cursor: pointer;
+}

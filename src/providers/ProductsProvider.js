@@ -27,7 +27,7 @@ const ProductsProvider = ({ children }) => {
   const addToCart = useCallback(
     (id) => {
       const curState = {...orderedProducts};
-      curState[id] += 1;
+      curState[id] = (curState[id] || 0) + 1;
       setOrderedProducts(curState);
     }, [orderedProducts]
   );
@@ -35,7 +35,7 @@ const ProductsProvider = ({ children }) => {
   const substractFromCart = useCallback(
     (id) => {
       const curState = {...orderedProducts};
-      curState[id] -= 1;
+      curState[id] = (curState[id] || 0) - 1;
       setOrderedProducts(curState);
     }, [orderedProducts]
   );
@@ -50,8 +50,8 @@ const ProductsProvider = ({ children }) => {
 
   useEffect(() => {
     setLoadingProducts(true);
-    
-    fetch('https://yalantis-react-school.herokuapp.com/api/v1/products')
+    // fetch('https://yalantis-react-school.herokuapp.com/api/v1/products')
+    fetch(`${process.env.REACT_APP_API_URL}/products`)
       .then(res => res.json())
       .then(data => {
         setProducts(data.items);
