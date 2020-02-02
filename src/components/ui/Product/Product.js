@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { ProductsContext } from '../../../providers/ProductsProvider';
-import styles from './Product.module.css';
+import './Product.css';
 import productImage from '../../../assets/images/product-image.png';
 
 const Product = ({
@@ -16,7 +16,7 @@ const Product = ({
   const { addToCart } = useContext(ProductsContext);
 
   return (
-      <Card style={{ width: '18rem', margin: '1rem' }} className={styles.productCard}>
+      <Card className="productCard">
         <Card.Img variant="top" src={productImage} />
         <Card.Body>
         <Card.Title>{name}</Card.Title>
