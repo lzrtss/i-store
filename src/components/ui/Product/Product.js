@@ -1,37 +1,29 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { ProductsContext } from '../../../providers/ProductsProvider';
 import './Product.css';
 import productImage from '../../../assets/images/product-image.png';
 
-const Product = ({
-  id,
-  name,
-  price,
-  origin
-}) => {
-  const { addToCart } = useContext(ProductsContext);
-
+const Product = (props) => {
   return (
       <Card className="productCard">
         <Card.Img variant="top" src={productImage} />
         <Card.Body>
-        <Card.Title>{name}</Card.Title>
+        <Card.Title>{props.name}</Card.Title>
         <Card.Text>
-          Price: ${price.toFixed(2)} <br />
-          Origin: {origin.toUpperCase()} <br />
+          Price: ${props.price.toFixed(2)} <br />
+          Origin: {props.origin.toUpperCase()} <br />
         </Card.Text>
         <Button 
           variant="outline-primary" 
           size="sm" 
           className="mr-2"  
-          onClick={() => addToCart(id)}>
+          onClick={() => props.addToCart(props.id)}>
           Add To Cart
         </Button>
-        <Link to={`/products/${id}`}>
+        <Link to={`/products/${props.id}`}>
           <Button 
             variant="outline-secondary" 
             size="sm">
@@ -47,7 +39,8 @@ Product.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
-  origin: PropTypes.string
+  origin: PropTypes.string,
+  addToCart: PropTypes.func
 };
 
 export default Product;

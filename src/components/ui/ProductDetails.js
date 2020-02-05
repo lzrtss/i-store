@@ -1,18 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import AppSpinner from './AppSpinner';
-import { useProduct } from '../../hooks/useProduct';
+import useGetProductById from '../../hooks/useGetProductById';
+import { addToCart } from '../../store/products/actions';
 import productImage from '../../assets/images/product-image.png';
-import { ProductsContext } from '../../providers/ProductsProvider';
 
-const ProductDetailsRoute = () => {
+const ProductDetails = (props) => {
   const { productId } = useParams();
-  const { product } = useProduct(productId);
+  const { product } = useGetProductById(productId);
   const { id, name, price, origin } = product || {};
-
-  const { addToCart } = useContext(ProductsContext);
   
   if (!product) return <AppSpinner />;
 
@@ -28,7 +27,7 @@ const ProductDetailsRoute = () => {
           <p className="lead">Origin: {origin.toUpperCase()}</p>
             <Button 
               variant="outline-primary"
-              onClick={() => addToCart(id)}>
+              onClick={() => props.addToCart(id)}>
               Add To Cart
             </Button>
           <Link to="/products">
@@ -42,4 +41,10 @@ const ProductDetailsRoute = () => {
   );
 };
 
-export default ProductDetailsRoute;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (id) => dispatch(addToCart(id))
+  }
+};
+
+export default connect(null, mapDispatchToProps)(ProductDetails);

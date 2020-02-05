@@ -1,28 +1,57 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Container } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
-import { ProductsContext } from '../providers/ProductsProvider';
 import AppSpinner from '../components/ui/AppSpinner';
 import CartColumns from '../components/ui/Cart/CartColumns';
 import CartList from '../components/ui/Cart/CartList';
 import CartTotal from '../components/ui/Cart/CartTotal';
+import { addToCart, substractFromCart, removeItemFromCart } from '../store/products/actions';
+import { 
+  selectLoadingProducts, 
+  selectAllProducts, 
+  selectOrderedProducts, 
+  selectOrderedProductsIds,
+  getTotalAmount
+} from '../store/selectors';
 
-const Cart = () => {
-  const { loadingProducts, orderedProducts, getTotalAmount } = useContext(ProductsContext);
-  const orderedProductsIds = Object.keys(orderedProducts).filter(key => orderedProducts[key] > 0);
+const Cart = (props) => {
 
-  const totalAmount = getTotalAmount();
-
-  if (loadingProducts) return <AppSpinner />;
+  if (props.loadingProducts) return <AppSpinner />;
 
   return (
     <Container className="mt-5" >
       <h3 className="mb-4">Your Cart</h3>
       <CartColumns />
-      <CartList orderedProductsIds={orderedProductsIds} />
-      <CartTotal totalAmount={totalAmount}/>
+      <CartList
+        products={props.products}
+        orderedProducts={props.orderedProducts}
+        orderedProductsIds={props.orderedProductsIds} 
+        addToCart={props.addToCart}
+        substractFromCart={props.substractFromCart}
+        removeItemFromCart={props.removeItemFromCart}
+        />
+      <CartTotal totalAmount={props.totalAmount}/>
     </Container>
   );
-}
+};
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    loadingProducts: selectLoadingProducts(state),
+    products: selectAllProducts(state),
+    orderedProducts: selectOrderedProducts(state),
+    orderedProductsIds: selectOrderedProductsIds(state),
+    totalAmount: getTotalAmount(state)
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (id) => dispatch(addToCart(id)),
+    substractFromCart: (id) => dispatch(substractFromCart(id)),
+    removeItemFromCart: (id) => dispatch(removeItemFromCart(id))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

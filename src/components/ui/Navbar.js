@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux'; 
 import { Button, Badge, Nav } from 'react-bootstrap';
 
-import { ProductsContext } from '../../providers/ProductsProvider';
+import { getTotalAmount } from '../../store/selectors';
 import logo from '../../assets/images/logo.png';
 
 const Navbar = () => {
-  const { getTotalAmount } = useContext(ProductsContext);
-  const totalAmount = getTotalAmount();
+  
+  const totalAmount = useSelector(state =>
+    getTotalAmount(state)
+  );
 
   const badge = totalAmount ? 
     <Badge pill variant="danger" className="cartBadge ml-1">${totalAmount}</Badge> : null
