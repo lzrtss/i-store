@@ -19,9 +19,9 @@ const Cart = (props) => {
 
   if (props.loadingProducts) return <AppSpinner />;
 
-  return (
-    <Container className="mt-5" >
-      <h3 className="mb-4">Your Cart</h3>
+  const title = props.orderedProductsIds.length ? 'Your Cart' : 'Your Cart is empty';
+  const cartBody = props.orderedProductsIds.length ? (
+    <>
       <CartColumns />
       <CartList
         products={props.products}
@@ -32,6 +32,13 @@ const Cart = (props) => {
         removeItemFromCart={props.removeItemFromCart}
         />
       <CartTotal totalAmount={props.totalAmount}/>
+    </>
+  ) : null;
+
+  return (
+    <Container className="mt-5" >
+      <h3 className="mb-4">{title}</h3>
+      {cartBody}
     </Container>
   );
 };

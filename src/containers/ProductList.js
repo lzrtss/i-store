@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import Product from '../components/ui/Product/Product';
 import AppSpinner from '../components/ui/AppSpinner';
-import { setProducts, setOrderedProducts, setLoadingProducts, addToCart } from '../store/products/actions';
-import { selectOrderedProducts, selectLoadingProducts } from '../store/selectors';
-import useGetProductList from '../hooks/useGetProductList';
+import { 
+  initFetchingProducts, 
+  setProducts, 
+  setOrderedProducts, 
+  setLoadingProducts, 
+  addToCart 
+} from '../store/products/actions';
+import { 
+  selectOrderedProducts, 
+  selectAllProducts, 
+  selectLoadingProducts, 
+  getFilteredProducts 
+} from '../store/selectors';
 
 const ProductList = (props) => {
 
-  const { products } = useGetProductList();
+  useEffect(() => {
+    if (!props.products.length) {
+      props.initFetchingProducts();
+    }
+    }, [props]
+  );
 
   if (props.loadingProducts) return <AppSpinner />;
 
@@ -18,7 +33,7 @@ const ProductList = (props) => {
     <Container>
       <h3 className="mt-4">Our Products</h3>
       <Row className="d-flex justify-content-center">
-        {products.map(({ id, name, price, origin }) => (
+        {props.filteredProducts.map(({ id, name, price, origin }) => (
           <Product
             key={id}
             id={id}
@@ -35,13 +50,16 @@ const ProductList = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    products: selectAllProducts(state),
     orderedProducts: selectOrderedProducts(state),
-    loadingProducts: selectLoadingProducts(state)
+    loadingProducts: selectLoadingProducts(state),
+    filteredProducts: getFilteredProducts(state)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    initFetchingProducts: () => dispatch(initFetchingProducts()),
     setProducts: (products) => dispatch(setProducts(products)),
     setOrderedProducts: (orderedProducts) => dispatch(setOrderedProducts(orderedProducts)),
     setLoadingProducts: (value) => dispatch(setLoadingProducts(value)),
