@@ -7,6 +7,9 @@ import './Product.css';
 import productImage from '../../../assets/images/product-image.png';
 
 const Product = (props) => {
+
+  const btnLabel = props.orderedProductsIds.includes(props.id) ? 'Added To Cart' : 'Add To Cart';
+
   return (
       <Card className="productCard">
         <Card.Img variant="top" src={productImage} />
@@ -21,12 +24,14 @@ const Product = (props) => {
           size="sm" 
           className="mr-2"  
           onClick={() => props.addToCart(props.id)}>
-          Add To Cart
+          {btnLabel}
         </Button>
         <Link to={`/products/${props.id}`}>
           <Button 
             variant="outline-secondary" 
-            size="sm">
+            size="sm"
+            onClick={props.hideFilters}
+          >
             Show Details
           </Button>
         </Link>

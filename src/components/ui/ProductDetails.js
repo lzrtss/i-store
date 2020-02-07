@@ -5,6 +5,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import AppSpinner from './AppSpinner';
 import useGetProductById from '../../hooks/useGetProductById';
+import { selectOrderedProductsIds } from '../../store/selectors';
 import { addToCart } from '../../store/products/actions';
 import productImage from '../../assets/images/product-image.png';
 
@@ -14,6 +15,8 @@ const ProductDetails = (props) => {
   const { id, name, price, origin } = product || {};
   
   if (!product) return <AppSpinner />;
+
+  const btnLabel = props.orderedProductsIds.includes(id) ? 'Added To Cart' : 'Add To Cart';
 
   return (
     <Container>
@@ -28,7 +31,7 @@ const ProductDetails = (props) => {
             <Button 
               variant="outline-primary"
               onClick={() => props.addToCart(id)}>
-              Add To Cart
+              {btnLabel}
             </Button>
           <Link to="/products">
             <Button variant="outline-secondary ml-2">
@@ -41,10 +44,16 @@ const ProductDetails = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    orderedProductsIds: selectOrderedProductsIds(state)
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (id) => dispatch(addToCart(id))
   }
 };
 
-export default connect(null, mapDispatchToProps)(ProductDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

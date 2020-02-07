@@ -10,6 +10,7 @@ const Navbar = (props) => {
     <Badge pill variant="danger" className="cartBadge ml-1">${props.totalAmount}</Badge> : null
 
   const filterBtnLabel = props.showFiltersValue ? 'Hide Filters' : 'Show Filters';
+  const classes = props.showFiltersBtn ? null : 'd-none';
 
   return (
     <>
@@ -27,12 +28,12 @@ const Navbar = (props) => {
               </Link>
             </li>
             <li className="nav-item ml-3 my-1">
-              <Button variant="outline-light" onClick={props.toggleFilters}> 
+              <Button variant="outline-light" className={classes} onClick={props.toggleFilters}> 
                 {filterBtnLabel}
               </Button>
             </li>
             <li className="nav-item ml-3 my-1">
-              <Link to="/cart">
+              <Link to="/cart" onClick={props.hideFilters} >
                 <Button variant="outline-light"><i className="fas fa-cart-plus mr-2" /> 
                   My Cart 
                   {badge}

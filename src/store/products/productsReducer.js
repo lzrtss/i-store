@@ -2,7 +2,8 @@ import {
   SET_PRODUCTS,
   SET_ORDERED_PRODUCTS,
   SET_LOADING_PRODUCTS,
-  TOGGLE_FILTERS, 
+  TOGGLE_FILTERS,
+  HIDE_FILTERS,
   SET_MIN_PRICE,
   SET_MAX_PRICE,
   SET_ORIGIN,
@@ -46,6 +47,13 @@ const toggleFilters = (state) => {
   return {
     ...state,
     showFilters: !state.showFilters
+  }
+};
+
+const hideFilters = (state) => {
+  return {
+    ...state,
+    showFilters: false
   }
 };
 
@@ -113,6 +121,7 @@ const productsReducer = (state = initialState, action) => {
     case SET_ORDERED_PRODUCTS: return setOrderedProducts(state, action)
     case SET_LOADING_PRODUCTS: return setLoadingProducts(state, action)
     case TOGGLE_FILTERS: return toggleFilters(state)
+    case HIDE_FILTERS: return hideFilters(state)
     case SET_MIN_PRICE: return setMinPrice(state, action)
     case SET_MAX_PRICE: return setMaxPrice(state, action)
     case SET_ORIGIN: return setOrigin(state, action)

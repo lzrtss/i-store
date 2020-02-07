@@ -9,13 +9,15 @@ import {
   setProducts, 
   setOrderedProducts, 
   setLoadingProducts, 
-  addToCart 
+  addToCart,
+  hideFilters
 } from '../store/products/actions';
 import { 
   selectOrderedProducts, 
   selectAllProducts, 
   selectLoadingProducts, 
-  getFilteredProducts 
+  getFilteredProducts,
+  selectOrderedProductsIds
 } from '../store/selectors';
 
 const ProductList = (props) => {
@@ -40,7 +42,9 @@ const ProductList = (props) => {
             name={name}
             price={price}
             origin={origin}
+            orderedProductsIds={props.orderedProductsIds}
             addToCart={props.addToCart}
+            hideFilters={props.hideFilters}
           />
         ))}
       </Row>
@@ -53,7 +57,8 @@ const mapStateToProps = (state) => {
     products: selectAllProducts(state),
     orderedProducts: selectOrderedProducts(state),
     loadingProducts: selectLoadingProducts(state),
-    filteredProducts: getFilteredProducts(state)
+    filteredProducts: getFilteredProducts(state),
+    orderedProductsIds: selectOrderedProductsIds(state)
   };
 };
 
@@ -63,7 +68,8 @@ const mapDispatchToProps = (dispatch) => {
     setProducts: (products) => dispatch(setProducts(products)),
     setOrderedProducts: (orderedProducts) => dispatch(setOrderedProducts(orderedProducts)),
     setLoadingProducts: (value) => dispatch(setLoadingProducts(value)),
-    addToCart: (id) => dispatch(addToCart(id))
+    addToCart: (id) => dispatch(addToCart(id)),
+    hideFilters: () => dispatch(hideFilters()) 
   };
 };
 

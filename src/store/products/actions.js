@@ -3,6 +3,7 @@ import {
   SET_ORDERED_PRODUCTS,
   SET_LOADING_PRODUCTS,
   TOGGLE_FILTERS,
+  HIDE_FILTERS,
   SET_MIN_PRICE,
   SET_MAX_PRICE,
   SET_ORIGIN,
@@ -53,6 +54,12 @@ export const setLoadingProducts = (value) => {
 export const toggleFilters = () => {
   return {
     type: TOGGLE_FILTERS
+  }
+};
+
+export const hideFilters = () => {
+  return {
+    type: HIDE_FILTERS
   }
 };
 
