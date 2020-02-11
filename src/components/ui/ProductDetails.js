@@ -1,20 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import AppSpinner from './AppSpinner';
-import { useProduct } from '../../hooks/useProduct';
+import useGetProductById from '../../hooks/useGetProductById';
+import { selectOrderedProductsIds } from '../../store/selectors';
+import { addToCart } from '../../store/products/actions';
 import productImage from '../../assets/images/product-image.png';
-import { ProductsContext } from '../../providers/ProductsProvider';
 
-const ProductDetailsRoute = () => {
+const ProductDetails = (props) => {
   const { productId } = useParams();
-  const { product } = useProduct(productId);
+  const { product } = useGetProductById(productId);
   const { id, name, price, origin } = product || {};
-
-  const { addToCart } = useContext(ProductsContext);
   
   if (!product) return <AppSpinner />;
+
+  const btnLabel = props.orderedProductsIds.includes(id) ? 'Added To Cart' : 'Add To Cart';
 
   return (
     <Container>
@@ -28,8 +30,8 @@ const ProductDetailsRoute = () => {
           <p className="lead">Origin: {origin.toUpperCase()}</p>
             <Button 
               variant="outline-primary"
-              onClick={() => addToCart(id)}>
-              Add To Cart
+              onClick={() => props.addToCart(id)}>
+              {btnLabel}
             </Button>
           <Link to="/products">
             <Button variant="outline-secondary ml-2">
@@ -42,4 +44,16 @@ const ProductDetailsRoute = () => {
   );
 };
 
-export default ProductDetailsRoute;
+const mapStateToProps = (state) => {
+  return {
+    orderedProductsIds: selectOrderedProductsIds(state)
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (id) => dispatch(addToCart(id))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
