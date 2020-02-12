@@ -9,7 +9,9 @@ import {
   SET_ORIGIN,
   ADD_TO_CART,
   SUBSTRACT_FROM_CART,
-  REMOVE_ITEM_FROM_CART
+  REMOVE_ITEM_FROM_CART,
+  SHOW_MODAL,
+  HIDE_MODAL
 } from './actionTypes';
 
 export const initFetchingProducts = () => {
@@ -102,5 +104,19 @@ export const removeItemFromCart = (id) => {
   return {
     type: REMOVE_ITEM_FROM_CART,
     id: id
+  }
+};
+
+export const showModal = () => {
+  console.log('Show Modal');
+  return {
+    type: SHOW_MODAL
+  }
+};
+
+export const hideModal = () => {
+  console.log('Hide Modal');
+  return {
+    type: HIDE_MODAL
   }
 };

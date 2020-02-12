@@ -7,10 +7,23 @@ export const getShowFiltersValue = (state) => state.products.showFilters;
 export const selectMinPrice = (state) => state.products.minPrice;
 export const selectMaxPrice = (state) => state.products.maxPrice === 0 ? 9999 : state.products.maxPrice;
 export const selectOrigin = (state) => state.products.origin;
+export const selectShowModalValue = (state) => state.products.showModal;
 
 export const selectOrderedProductsIds = createSelector(
   selectOrderedProducts,
   (orderedProducts = []) => Object.keys(orderedProducts).filter(key => orderedProducts[key] > 0)
+);
+
+export const selectAllProductsIds = createSelector( // check if works correctly
+  selectAllProducts,
+  (products = []) => products.map(prod => prod.id)
+);
+
+export const selectMyProductsIds = createSelector( // check if works correctly
+  selectAllProducts,
+  (products = []) => products
+    .filter(prod => prod.isEditable === true)
+    .map(prod => prod.id)
 );
 
 export const getTotalAmount = createSelector(

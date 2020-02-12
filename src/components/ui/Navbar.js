@@ -28,6 +28,20 @@ const Navbar = (props) => {
               </Link>
             </li>
             <li className="nav-item ml-3 my-1">
+              {/* <Link to="/add-product" > */}
+                <Button variant="outline-light" onClick={props.showModal}> 
+                  Add Product
+                </Button>
+              {/* </Link> */}
+            </li>
+            <li className="nav-item ml-3 my-1">
+              <Link to="/my-products">
+                <Button variant="outline-light"> 
+                  My Products
+                </Button>
+              </Link>
+            </li>
+            <li className="nav-item ml-3 my-1">
               <Button variant="outline-light" className={classes} onClick={props.toggleFilters}> 
                 {filterBtnLabel}
               </Button>

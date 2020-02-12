@@ -10,7 +10,8 @@ import {
   setMaxPrice, 
   setOrigin, 
   toggleFilters, 
-  hideFilters 
+  hideFilters,
+  showModal 
 } from '../store/products/actions';
 
 const AppHeader = (props) => {
@@ -19,7 +20,7 @@ const AppHeader = (props) => {
   const { location } = props;
 
   useEffect(() => {
-    if (location.pathname !== '/products') {
+    if (location.pathname === '/cart') {
       setShowFiltersBtn(false);
     } else {
       setShowFiltersBtn(true);
@@ -34,6 +35,7 @@ const AppHeader = (props) => {
         showFiltersValue={props.showFiltersValue} 
         toggleFilters={props.toggleFilters}
         hideFilters={props.hideFilters}
+        showModal={props.showModal}
       />
       <Filters 
         setMinPrice={props.setMinPrice}
@@ -58,7 +60,8 @@ const mapDispatchToProps = (dispatch) => {
     setMaxPrice: (maxPrice) => dispatch(setMaxPrice(maxPrice)),
     setOrigin: (origin) => dispatch(setOrigin(origin)),
     toggleFilters: () => dispatch(toggleFilters()),
-    hideFilters: () => dispatch(hideFilters())
+    hideFilters: () => dispatch(hideFilters()),
+    showModal: () => dispatch(showModal())
   };
 };
 

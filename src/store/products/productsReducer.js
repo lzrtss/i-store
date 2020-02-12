@@ -10,6 +10,8 @@ import {
   ADD_TO_CART,
   SUBSTRACT_FROM_CART, 
   REMOVE_ITEM_FROM_CART,
+  SHOW_MODAL,
+  HIDE_MODAL
 } from './actionTypes';
 
 export const initialState = {
@@ -20,6 +22,7 @@ export const initialState = {
   minPrice: 0,
   maxPrice: 9999,
   origin: ['europe', 'usa', 'africa', 'asia'],
+  showModal: false
 };
 
 const setProducts = (state, action) => {
@@ -115,6 +118,20 @@ const removeItemFromCart = (state, action) => {
   }
 };
 
+const showModal = (state) => {
+  return {
+    ...state,
+    showModal: true
+  }
+};
+
+const hideModal = (state) => {
+  return {
+    ...state,
+    showModal: false
+  }
+};
+
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_PRODUCTS: return setProducts(state, action)
@@ -128,6 +145,8 @@ const productsReducer = (state = initialState, action) => {
     case ADD_TO_CART: return addToCart(state, action)
     case SUBSTRACT_FROM_CART: return substractFromCart(state, action)
     case REMOVE_ITEM_FROM_CART: return removeItemFromCart(state, action)
+    case SHOW_MODAL: return showModal(state)
+    case HIDE_MODAL: return hideModal(state)
     default: return state;
   }
 };

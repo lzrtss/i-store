@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Product from '../components/ui/Product/Product';
 import AppSpinner from '../components/ui/AppSpinner';
+import AddProductModal from './AddProductModal';
 import { 
   initFetchingProducts, 
   setProducts, 
@@ -48,6 +49,7 @@ const ProductList = (props) => {
           />
         ))}
       </Row>
+      <AddProductModal />
     </Container>
   );
 };
