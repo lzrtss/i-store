@@ -13,10 +13,12 @@ import {
   REMOVE_ITEM_FROM_CART,
   SHOW_MODAL,
   HIDE_MODAL,
-  SET_EDIT_PRODUCT_ID
+  SET_EDIT_PRODUCT_ID,
+  SET_ERROR
 } from './actionTypes';
 
 export const initialState = {
+  error: null,
   products: [],
   orderedProducts: {},
   loadingProducts: false,
@@ -27,6 +29,13 @@ export const initialState = {
   showModal: false,
   showMyProducts: false,
   editProductId: null
+};
+
+const setError = (state, action) => {
+  return {
+    ...state,
+    error: action.value
+  }
 };
 
 const setProducts = (state, action) => {
@@ -152,6 +161,7 @@ const setEditProductId = (state, action) => {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_ERROR: return setError(state, action)
     case SET_PRODUCTS: return setProducts(state, action)
     case SET_ORDERED_PRODUCTS: return setOrderedProducts(state, action)
     case SET_LOADING_PRODUCTS: return setLoadingProducts(state, action)

@@ -15,7 +15,8 @@ import {
   REMOVE_ITEM_FROM_CART,
   SHOW_MODAL,
   HIDE_MODAL,
-  SET_EDIT_PRODUCT_ID
+  SET_EDIT_PRODUCT_ID,
+  SET_ERROR
 } from './actionTypes';
 
 const config = {
@@ -27,7 +28,7 @@ const config = {
 export const initFetchingProducts = () => {
   return dispatch => {
     dispatch(setLoadingProducts(true));
-    axios.get(`${process.env.REACT_APP_API_URL}/products/?page=8`, config) // TODO: remove page
+    axios.get(`${process.env.REACT_APP_API_URL}/products/?page=7`, config) // TODO: remove page
       .then(res => {
         dispatch(setProducts(res.data.items));
         dispatch(setLoadingProducts(false));
@@ -36,7 +37,7 @@ export const initFetchingProducts = () => {
         dispatch(setOrderedProducts(productsInCart));
     })
     .catch(error => {
-      console.log('Fetching products failed...', error); // TODO: rewrite to show in UI
+      console.log('Fetching products failed...', error); // TODO: remove
       dispatch(setLoadingProducts(false));
     });
   }
@@ -51,15 +52,15 @@ export const addProduct = (productData) => {
         dispatch(initFetchingProducts());
         console.log(res); // TODO: remove
       })
-    .catch(error => {
-      console.log('Fetching products failed...', error); // TODO: rewrite to show in UI
+    .catch(err => {
+      console.log('Fetching products failed...', err); // TODO: remove
+      dispatch(setError(err.message));
     });
   }
 };
 
 export const sendUpdatedProductData = (id, newData) => {
   return dispatch => {
-    console.log('Start editing... ', id, newData); // TODO: remove
     axios.patch(`${process.env.REACT_APP_API_URL}/products/${id}`, newData, config)
       .then(res => {
         console.log(res.data); // TODO: remove
@@ -67,11 +68,14 @@ export const sendUpdatedProductData = (id, newData) => {
         dispatch(initFetchingProducts());
         dispatch(setEditProductId(null));
       })
-      .catch(err => console.log(err)) // TODO: rewrite to show in UI
+      .catch(err => {
+        console.log(err); // TODO: remove
+        dispatch(setError(err.message));
+      })
   }
 };
 
-export const editProduct = (id, newData) => {
+export const editProduct = (id) => {
   return dispatch => {
     dispatch(showModal());
     dispatch(setEditProductId(id));
@@ -82,6 +86,14 @@ export const closeModal = () => {
   return dispatch => {
     dispatch(hideModal());
     dispatch(setEditProductId(null));
+    dispatch(setError(null));
+  }
+};
+
+export const setError = (value) => {
+  return {
+    type: SET_ERROR,
+    value: value
   }
 };
 

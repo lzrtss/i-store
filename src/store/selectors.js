@@ -10,6 +10,7 @@ export const selectOrigin = (state) => state.products.origin;
 export const selectShowModalValue = (state) => state.products.showModal;
 export const getShowMyProductsValue = (state) => state.products.showMyProducts;
 export const selectEditProductId = (state) => state.products.editProductId;
+export const selectError = (state) => state.products.error;
 
 export const selectEditProductById = createSelector(
   [selectAllProducts, selectEditProductId],
