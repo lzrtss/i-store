@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Navbar from '../components/ui/Navbar';
 import Filters from '../components/ui/Filters/Filters';
-import { getTotalAmount, getShowFiltersValue } from '../store/selectors';
+import { getTotalAmount, getShowFiltersValue, getShowMyProductsValue } from '../store/selectors';
 import { 
   setMinPrice, 
   setMaxPrice, 
   setOrigin, 
   toggleFilters, 
   hideFilters,
-  showModal 
+  showModal,
+  setShowMyProducts
 } from '../store/products/actions';
 
 const AppHeader = (props) => {
@@ -36,6 +38,7 @@ const AppHeader = (props) => {
         toggleFilters={props.toggleFilters}
         hideFilters={props.hideFilters}
         showModal={props.showModal}
+        setShowMyProducts={props.setShowMyProducts}
       />
       <Filters 
         setMinPrice={props.setMinPrice}
@@ -50,7 +53,8 @@ const AppHeader = (props) => {
 const mapStateToProps = (state) => {
   return {
     totalAmount: getTotalAmount(state),
-    showFiltersValue: getShowFiltersValue(state)
+    showFiltersValue: getShowFiltersValue(state),
+    showMyProductsValue: getShowMyProductsValue(state)
   };
 };
 
@@ -61,8 +65,22 @@ const mapDispatchToProps = (dispatch) => {
     setOrigin: (origin) => dispatch(setOrigin(origin)),
     toggleFilters: () => dispatch(toggleFilters()),
     hideFilters: () => dispatch(hideFilters()),
-    showModal: () => dispatch(showModal())
+    showModal: () => dispatch(showModal()),
+    setShowMyProducts: (value) => dispatch(setShowMyProducts(value))
   };
+};
+
+AppHeader.propTypes = {
+  totalAmount: PropTypes.number,
+  showFiltersValue: PropTypes.bool,
+  showMyProductsValue: PropTypes.bool,
+  setMinPrice: PropTypes.func,
+  setMaxPrice: PropTypes.func,
+  setOrigin: PropTypes.func,
+  toggleFilters: PropTypes.func,
+  hideFilters: PropTypes.func,
+  showModal: PropTypes.func,
+  setShowMyProducts: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AppHeader));

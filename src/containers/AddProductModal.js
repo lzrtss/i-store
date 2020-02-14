@@ -2,18 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { selectShowModalValue } from '../store/selectors';
-import { hideModal } from '../store/products/actions';
+import { selectShowModalValue, selectEditProductId } from '../store/selectors';
+import { closeModal, addProduct, sendUpdatedProductData } from '../store/products/actions';
 import ModalWrapper from '../components/ui/Modal/ModalWrapper';
 import ProductForm from '../components/ui/Forms/ProductForm';
 
 const AddProductModal = (props) => {
 
   const handleSubmit = (formData) => {
-    console.log('New Product: ', formData); // rewrite to dispatch action
+    const { name, price, origin } = formData;
+    const newProduct = {
+      product: {
+        name: name, 
+        price: Number(price), 
+        origin: origin
+      }
+  };
+    if (props.editProductId) {
+      props.sendUpdatedProductData(props.editProductId, newProduct);
+    } else {
+      props.addProduct(newProduct);
+    }
   };
 
-  const modalTitle = 'New Product';
+  const modalTitle = props.editProductId ? 'Edit Product' : 'New Product';
   const modalBody = <ProductForm onSubmit={handleSubmit} />;
 
   return (
@@ -21,26 +33,32 @@ const AddProductModal = (props) => {
       show={props.showModal} 
       title={modalTitle}
       body={modalBody}
-      onHide={props.hideModal}
+      onHide={props.closeModal}
     />
   )
 };
 
 const mapStateToProps = (state) => {
   return {
-    showModal: selectShowModalValue(state)
+    showModal: selectShowModalValue(state),
+    editProductId: selectEditProductId(state)
   }
  };
 
- const mapDispatchToProps = (dispatch) => {
-   return {
-     hideModal: () => dispatch(hideModal())
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeModal: () => dispatch(closeModal()),
+    addProduct: (productData) => dispatch(addProduct(productData)),
+    sendUpdatedProductData: (id, data) => dispatch(sendUpdatedProductData(id, data))
    }
  };
 
 AddProductModal.propTypes = {
   showModal: PropTypes.bool,
-  hideModal: PropTypes.func,
+  editProductId: PropTypes.string,
+  closeModal: PropTypes.func,
+  addProduct: PropTypes.func,
+  sendUpdatedProductData: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProductModal);
