@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 import AppSpinner from './AppSpinner';
 import useGetProductById from '../../hooks/useGetProductById';
@@ -43,6 +44,11 @@ const ProductDetails = (props) => {
     </Container>
   );
 };
+
+ProductDetails.propTypes = {
+  orderedProductsIds: PropTypes.arrayOf(PropTypes.string),
+  addToCart: PropTypes.func
+}
 
 const mapStateToProps = (state) => {
   return {

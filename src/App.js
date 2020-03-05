@@ -16,6 +16,9 @@ const App = () => {
         <Route exact path="/products">
           <ProductList />
         </Route>
+        <Route exact path="/my-products">
+            <ProductList />
+        </Route>
         <Route exact path="/cart">
             <Cart />
         </Route>

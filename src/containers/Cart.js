@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import AppSpinner from '../components/ui/AppSpinner';
 import CartColumns from '../components/ui/Cart/CartColumns';
@@ -60,5 +61,13 @@ const mapDispatchToProps = (dispatch) => {
     removeItemFromCart: (id) => dispatch(removeItemFromCart(id))
   };
 };
+
+Cart.propTypes = {
+  loadingProducts: PropTypes.bool,
+  products: PropTypes.arrayOf(PropTypes.object),
+  orderedProducts: PropTypes.object,
+  orderedProductsIds: PropTypes.arrayOf(PropTypes.string),
+  totalAmount: PropTypes.number,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

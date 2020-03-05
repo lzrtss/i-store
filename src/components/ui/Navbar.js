@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 import { Button, Badge, Nav } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 import logo from '../../assets/images/logo.png';
 
@@ -21,9 +22,21 @@ const Navbar = (props) => {
           </Link>
           <ul className="navbar-nav d-flex w-100 justify-content-end align-items-center">
             <li className="nav-item ml-3 my-1">
-              <Link to="/products">
+              <Link to="/products" onClick={() => props.setShowMyProducts(false)}>
                 <Button variant="outline-light"> 
                   Products
+                </Button>
+              </Link>
+            </li>
+            <li className="nav-item ml-3 my-1">
+              <Button variant="outline-light" onClick={props.showModal}> 
+                Add Product
+              </Button>
+            </li>
+            <li className="nav-item ml-3 my-1">
+              <Link to="/my-products" onClick={() => props.setShowMyProducts(true)}>
+                <Button variant="outline-light"> 
+                  My Products
                 </Button>
               </Link>
             </li>
@@ -46,5 +59,15 @@ const Navbar = (props) => {
     </>
   );
 };
+
+Navbar.propTypes = {
+  totalAmount: PropTypes.number,
+  showFiltersValue: PropTypes.bool,
+  showFiltersBtn: PropTypes.bool,
+  setShowMyProducts: PropTypes.func,
+  toggleFilters: PropTypes.func,
+  hideFilters: PropTypes.func,
+  showModal: PropTypes.func
+}
 
 export default Navbar;
